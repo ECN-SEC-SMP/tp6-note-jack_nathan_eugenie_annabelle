@@ -8,6 +8,8 @@
  *
  */
 #include <iostream>
+#include "gamehandler.hpp"
+
 
 int main(int argc, char const *argv[])
 {
@@ -17,6 +19,9 @@ int main(int argc, char const *argv[])
     std::cout << std::endl;
 
     /* TODO */
+    GameHandler game = GameHandler();
+
+    game.start();
 
     return 0;
 }
