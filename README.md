@@ -24,3 +24,9 @@ Run default
 ```bash
 ./build/CPP_TP6
 ```
+
+## Méthode de travail
+
+Schéma reflexion :
+
+![Diagramme Croquis](doc/diagram_croquis.jpg)
