@@ -3,7 +3,7 @@
 Nathan :
 
 - [x] Prendre en photo schema diagram
-- [ ] Envoyer la photo du diagramme à tout le monde
+- [x] Envoyer la photo du diagramme à tout le monde
 - [ ] Class Input
 - [ ] Afficher une Case
 - [ ] Afficher Board sans Case
