@@ -7,13 +7,17 @@
 // #include "../include/player.hpp"
 // #include "../include/board.hpp"
 
+#define MAX_PLAYER 4
+#define MIN_PLAYER 1
+
+
 class GameHandler
 {
 
 private:
     int currentPlayer;
 
-    // Player[]* player;
+    // std::vector<Player*> players;
     // Board* board;
 
     bool detectWin(void);

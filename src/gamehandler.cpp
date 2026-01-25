@@ -9,28 +9,64 @@ GameHandler::GameHandler(void)
 
 void GameHandler::setup()
 {
-    // Créer joueurs
+    std::cout << "-------------------------" << std::endl;
+    std::cout << "| Bienvenue sur 0trio ! |" << std::endl;
+    std::cout << "-------------------------" << std::endl;
 
-    // Faire un choix entre 2 et 4
-    std::cout << "Combien de joueurs " << std::endl;
+    std::cout << "Combien de joueurs entre " << MIN_PLAYER
+              << " et " << MAX_PLAYER << std::endl;
 
-    // Get valeur
     int nbJoueurs = 0;
-
-    // Faire un choix entre 0 et nbJoueurs - 1
-    std::cout << "Combien de robot ?" << std::endl;
-
     int nbRobots = 0;
-    for (int i = 0; i < (nbJoueurs - nbRobots); i++)
+
+    // Saisie du nombre de joueurs
+    do
     {
-        // this->players.push(Humain())
+        std::cin >> nbJoueurs;
+    } while (nbJoueurs < MIN_PLAYER || nbJoueurs > MAX_PLAYER);
+
+    int maxRobots = MAX_PLAYER - nbJoueurs;
+
+    // 1 seul joueur
+    if (nbJoueurs == 1)
+    {
+        do
+        {
+            std::cout << "Combien de robots entre 1 et " << maxRobots << " ?" << std::endl;
+            std::cin >> nbRobots;
+        } while (nbRobots < 1 || nbRobots > maxRobots);
+    }
+    else if (nbJoueurs < MAX_PLAYER) // Plusieurs joueurs mais on peut ajouter des robots
+    {
+        char reponse;
+        do
+        {
+            std::cout << "Souhaitez-vous ajouter des robots ? (y/n)" << std::endl;
+            std::cin >> reponse;
+        } while (reponse != 'y' && reponse != 'Y' &&
+                 reponse != 'n' && reponse != 'N');
+
+        if (reponse == 'y' || reponse == 'Y')
+        {
+            do
+            {
+                std::cout << "Combien de robots entre 1 et " << maxRobots << " ?" << std::endl;
+                std::cin >> nbRobots;
+            } while (nbRobots < 1 || nbRobots > maxRobots);
+        }
     }
 
-    for (int i = 0; i < (nbRobots); i++)
+    for (int i = 0; i < nbJoueurs; i++)
     {
-        // this->players.push(Robot())
+        // this.players.push(Humain());
+    }
+    for (int i = 0; i < nbRobots; i++)
+    {
+        // this.players.push(Robot());
     }
 
+    std::cout << "Joueurs humains : " << nbJoueurs
+              << " | Robots : " << nbRobots << std::endl;
 }
 
 void GameHandler::start(void)
@@ -40,4 +76,7 @@ void GameHandler::start(void)
 
 GameHandler::~GameHandler()
 {
+}
+
+bool GameHandler::detectWin(/*Case* case*/) {
 }
