@@ -7,10 +7,13 @@ class Case
 {
 private:
     Pion* pion[3];
-    int position[2]; // x et y
+    int x;
+    int y;
 public:
     Case(int x, int y);
     ~Case();
-    void deletePion(SIZE s);
     void addPion(Pion* p);
+    void deletePion(SIZE s);
+    int getX();
+    int getY();
 };

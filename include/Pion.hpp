@@ -4,8 +4,8 @@
 #include "Size.hpp"
 
 
-struct Pion
+typedef struct
 {
     COLOR Color;
     SIZE taille;    
-};
+} Pion;
