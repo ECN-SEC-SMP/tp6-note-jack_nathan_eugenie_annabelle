@@ -8,7 +8,7 @@
  *
  */
 #include <iostream>
-#include "gamehandler.hpp"
+#include "GameHandler.hpp"
 
 
 int main(int argc, char const *argv[])

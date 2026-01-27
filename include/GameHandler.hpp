@@ -4,12 +4,11 @@
 #include <vector>
 #include <iostream>
 
-// #include "../include/player.hpp"
-// #include "../include/board.hpp"
+#include "Case.hpp"
+#include "Board.hpp"
 
 #define MAX_PLAYER 4
 #define MIN_PLAYER 1
-
 
 class GameHandler
 {
@@ -18,9 +17,9 @@ private:
     int currentPlayer;
 
     // std::vector<Player*> players;
-    // Board* board;
+    Board *board;
 
-    bool detectWin(void);
+    bool detectWin(Case *box);
     void refreshDisplay(void);
 
     /**
@@ -50,6 +49,12 @@ private:
      *
      */
     void assignColor(void);
+
+    bool checkDiagR(int x, int y);
+    bool checkDiagL(int x, int y);
+    bool checkLineHB(int x, int y);
+    bool checkLineLR(int x, int y);
+    bool checkCase(int x, int y);
 
 public:
     /**

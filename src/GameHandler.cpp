@@ -1,9 +1,9 @@
-#include "gamehandler.hpp"
+#include "GameHandler.hpp"
 
 GameHandler::GameHandler(void)
 {
     // this->players = [];
-    // this->board = getBoard();
+    this->board = new Board();
     this->currentPlayer = 0;
 }
 
@@ -78,5 +78,71 @@ GameHandler::~GameHandler()
 {
 }
 
-bool GameHandler::detectWin(/*Case* case*/) {
+bool GameHandler::detectWin(Case *box)
+{
+    bool res = false;
+
+    // res = this->checkDiagL(box);
+    // if (!res)
+    // {
+    //     res = this->checkDiagR(box);
+    // }
+    // if (!res)
+    // {
+    //     res = this->checkLineHB(box);
+    // }
+
+    // if (!res)
+    // {
+    //     res = this->checkLineLR(box);
+    // }
+
+    // if (!res)
+    // {
+    //     res = this->checkCase(box);
+    // }
+
+    return res;
+}
+
+bool GameHandler::checkDiagL(int x, int y)
+{
+    // int x = box->x;
+    // int y = box->y;
+
+    if (x != y)
+    {
+        return false;
+    }
+
+    // Comparer 0,0 && 1,1 && 2,2
+    return true;
+}
+bool GameHandler::checkDiagR(int x, int y)
+{
+
+    if ((x == 2 && y == 0) || (x == 1 && y == 1) || (x == 0 && y == 2))
+    {
+        return false;
+    }
+    // Comparer 2,0 && 1,1 && 0,2
+
+    return true;
+}
+bool GameHandler::checkLineHB(int x, int y)
+{
+
+    // comparer x, 0 && x, 1 && x, 2
+
+    return true;
+}
+bool GameHandler::checkLineLR(int x, int y)
+{
+    // comparer 0, y && 1, y && 2, y
+    return true;
+}
+bool GameHandler::checkCase(int x, int y)
+{
+    // Comparer la case
+    return true;
 }
