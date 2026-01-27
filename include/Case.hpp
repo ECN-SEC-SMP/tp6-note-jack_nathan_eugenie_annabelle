@@ -54,7 +54,7 @@ public:
      * @brief Renvoie le Pion ou nullptr si vide
      * @param s Taille du pion à renvoyer
      */
-    Pion getPion(SIZE s);
+    Pion* getPion(SIZE s);
     
     /**
      * @brief Récupère la coordonnée X de la case
