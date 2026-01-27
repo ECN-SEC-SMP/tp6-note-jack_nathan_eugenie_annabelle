@@ -14,7 +14,7 @@ Nathan :
 
 Annabelle :
 
-- [ ] Réaliser le diagramme de classe V1 
+- [X] Réaliser le diagramme de classe V1 
 - [ ] Classe Player avec Eugénie
 - [ ] Classes enfants de la classes player (Human and Robot)
 - [ ] Reprendre le diagramme de classe avec tout le monde pour faire une V2 
