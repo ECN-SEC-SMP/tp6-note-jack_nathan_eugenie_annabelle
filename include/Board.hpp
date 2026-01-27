@@ -1,16 +1,13 @@
+#include "Case.hpp"
+
+#define BOARD_SIZE 3
+
 class Board
 {
 private:
-    /* data */
+    Case cases[BOARD_SIZE][BOARD_SIZE];
 public:
-    Board(/* args */);
+    Board();
     ~Board();
+    Case getCase(int x, int y);
 };
-
-Board::Board(/* args */)
-{
-}
-
-Board::~Board()
-{
-}
