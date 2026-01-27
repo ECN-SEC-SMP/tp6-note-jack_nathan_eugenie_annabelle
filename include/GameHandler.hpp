@@ -19,6 +19,13 @@ private:
     // std::vector<Player*> players;
     Board *board;
 
+    /**
+     * @brief Vérifie si un joueur a gagné
+     * 
+     * @param box 
+     * @return true 
+     * @return false 
+     */
     bool detectWin(Case *box);
     void refreshDisplay(void);
 

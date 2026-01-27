@@ -9,7 +9,7 @@ file(MAKE_DIRECTORY output) # Create directory for outputs
 
 set(sources
     ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/gamehandler.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/GameHandler.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Display.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Input.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Board.cpp
