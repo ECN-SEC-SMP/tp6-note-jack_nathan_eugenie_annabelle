@@ -4,29 +4,56 @@
 
 classDiagram 
 
+%% ----------- LIENS ----------- %%
+    
+    GameHandler *-- Board
+    GameHandler o-- Player
+    GameHandler *-- Display
+    GameHandler *-- Input
+
+    Board o-- Case
+
+    Player <|-- Bot
+    Player <|-- Human
+
+
+%% ----------- CLASSES ----------- %%
+
     class GameHandler {
         -player[]
         -purrentPlayer
-        + detectWin()
+        + DetectWin()
     } 
-     
 
     class Board {
         -int lenth
     } 
 
-    GameHandler --* Board
-
     class Case {
         -int circles 
         -int taillesOnCase []
     }
- 
-    Board o-- Case
 
     class Player {
         -enum COLOR 
         -int taillesOnCase []
+    }
+
+    class Bot {
+        -previsionsCoups []
+        -void ThinkCoups ()
+    }
+
+    class Human {
+        
+    }
+
+    class Display {
+        
+    }
+
+    class Input {
+        
     }
 
     class  COLOR {
