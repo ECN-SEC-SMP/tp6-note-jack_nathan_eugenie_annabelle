@@ -1,7 +1,11 @@
 #include "Case.hpp"
 
+Case::Case()
+ : x(0), y(0)
+{}
+
 Case::Case(int x, int y)
-    : x:x ; y:y
+    : x(x) , y(y)
 {
     for (int i = 0; i < 3; i++)
     {
@@ -47,14 +51,32 @@ void Case::deletePion(SIZE s)
     }
 }
 
+Pion Case::getPion(SIZE s)
+{
+    switch (p->taille)
+    {
+    case SMALL:
+        return pion[0];
+        break;
+    case MEDIUM:
+        return pion[1];
+        break;
+    case LARGE:
+        return pion[2];
+        break;
+    default:
+        break;
+    }
+}
+
 
 int Case::getX()
 {
-    return position[0];
+    return x;
 }
 
 int Case::getY()
 {
-    return position[1];
+    return y;
 }
 
