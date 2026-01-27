@@ -1,5 +1,5 @@
 
-cmake_minimum_required(VERSION 4.0)
+# cmake_minimum_required(VERSION 4.0)
 project(CPP_TP6)
 
 set(CMAKE_CXX_STANDARD 20)
@@ -12,8 +12,12 @@ set(sources
     ${CMAKE_CURRENT_SOURCE_DIR}/src/gamehandler.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Display.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Input.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Board.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Case.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tests/testDisplay.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tests/testInput.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/tests/testBoard.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/tests/testCase.cpp
     # ${CMAKE_CURRENT_SOURCE_DIR}/src/_.cpp
 )
 
