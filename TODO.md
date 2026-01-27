@@ -4,12 +4,12 @@ Nathan :
 
 - [x] Prendre en photo schema diagram
 - [x] Envoyer la photo du diagramme à tout le monde
-- [ ] Class Input
-- [ ] Afficher une Case
-- [ ] Afficher Board sans Case
-- [ ] Afficher Board avec Case
-- [ ] Afficher Selection Pion
-- [ ] Afficher Curseur
+- [x] Class Input
+- [x] Afficher une Case
+- [x] Afficher Board sans Case
+- [x] Afficher Board avec Case
+- [x] Afficher Selection Pion
+- [x] Afficher Curseur
 
 
 Annabelle :
