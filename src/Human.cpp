@@ -41,10 +41,9 @@ playerAction_t Human::playTurn(Board* board, cursor_t* cursor)
             }
             return ARROW;
         }
-
-        if(key == KEY_TAB) {
-            return PION_SEL_ENABLE
-        }
+        //if(key == KEY_TAB) {
+        //    return PION_SEL_ENABLE;
+        //}
 
         if(key == KEY_ENTER){
             COLOR c = this->color[0]; //Première couleur du joueur
@@ -53,7 +52,7 @@ playerAction_t Human::playTurn(Board* board, cursor_t* cursor)
             if (!hasPion(c, s)) {
                 return PION_SEL_DISABLE;
             }
-            Case& selectedCase = board->getCase(cursor->x, cursor->y);
+            Case selectedCase = board->getCase(cursor->x, cursor->y);
         
             if (selectedCase.getPion(s) == nullptr) {
                 Pion* newPion = new Pion{c, s};
