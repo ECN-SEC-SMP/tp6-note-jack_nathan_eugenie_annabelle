@@ -7,8 +7,9 @@
 #include <string>
 #include <vector>
 #include "Human.hpp"
+#include "Board.hpp"
 
-playerAction_t playTurn(Board* board, cursor_t* cursor)
+playerAction_t Human::playTurn(Board* board, cursor_t* cursor)
     {
         static cursor_t cursor = {0};
         InputKey_t key;
