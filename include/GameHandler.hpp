@@ -17,7 +17,7 @@ class GameHandler
 private:
     int currentPlayer;
 
-    std::vector<Player*> players;
+    std::vector<Player *> players;
     Board *board;
 
     /**
@@ -60,11 +60,16 @@ private:
      */
     void assignColor(void);
 
-    bool checkDiagR(int x, int y);
-    bool checkDiagL(int x, int y);
-    bool checkLineHB(int x, int y);
-    bool checkLineLR(int x, int y);
-    bool checkCase(int x, int y);
+    bool detectWin(int x, int y, COLOR c) const;
+
+    bool checkRow(int x, COLOR c) const;
+    bool checkCol(int y, COLOR c) const;
+    bool checkDiagMain(COLOR c) const;
+    bool checkDiagAnti(COLOR c) const;
+    bool checkStack(int x, int y, COLOR c) const;
+
+    // helper de lecture
+    bool has(int x, int y, SIZE s, COLOR c) const;
 
 public:
     /**

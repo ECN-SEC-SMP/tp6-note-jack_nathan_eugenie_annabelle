@@ -83,98 +83,32 @@ void GameHandler::setup()
 
 void GameHandler::start(void)
 {
+    srand(time(0));
+
     this->setup();
+
+
 }
 
 GameHandler::~GameHandler()
 {
 }
 
-bool GameHandler::detectWin(Case *box)
-{
-    bool res = false;
-
-    // res = this->checkDiagL(box);
-    // if (!res)
-    // {
-    //     res = this->checkDiagR(box);
-    // }
-    // if (!res)
-    // {
-    //     res = this->checkLineHB(box);
-    // }
-
-    // if (!res)
-    // {
-    //     res = this->checkLineLR(box);
-    // }
-
-    // if (!res)
-    // {
-    //     res = this->checkCase(box);
-    // }
-
-    return res;
-}
-
-bool GameHandler::checkDiagL(int x, int y)
-{
-    // int x = box->x;
-    // int y = box->y;
-
-    if (x != y)
-    {
-        return false;
-    }
-
-    // Comparer 0,0 && 1,1 && 2,2
-    return true;
-}
-bool GameHandler::checkDiagR(int x, int y)
-{
-
-    if ((x == 2 && y == 0) || (x == 1 && y == 1) || (x == 0 && y == 2))
-    {
-        return false;
-    }
-    // Comparer 2,0 && 1,1 && 0,2
-
-    return true;
-}
-bool GameHandler::checkLineHB(int x, int y)
-{
-
-    // comparer x, 0 && x, 1 && x, 2
-
-    return true;
-}
-bool GameHandler::checkLineLR(int x, int y)
-{
-    // comparer 0, y && 1, y && 2, y
-    return true;
-}
-bool GameHandler::checkCase(int x, int y)
-{
-    // Comparer la case
-    return true;
-}
-
 COLOR GameHandler::getRandomColor()
 {
     std::vector<COLOR> colors = {COLOR::BLUE, COLOR::GREEN, COLOR::RED, COLOR::YELLOW};
 
-    std::vector<COLOR> takenColor = {};
+    std::vector<COLOR> takenColors = {};
 
     for (Player *p : this->players)
     {
         const std::vector<COLOR> &pColor = p->getColor();
         for (size_t i = 0; i < pColor.size(); i++)
         {
-            takenColor.push_back(pColor.at(0));
+            takenColors.push_back(pColor.at(i));
         }
     }
 
-    srand(time(0));
     bool newColor;
     int randomNum;
     do
@@ -182,9 +116,9 @@ COLOR GameHandler::getRandomColor()
         newColor = true;
         randomNum = rand() % 4;
 
-        for (COLOR c : takenColor)
+        for (COLOR takenColor : takenColors)
         {
-            if (c == colors.at(randomNum))
+            if (takenColor == colors.at(randomNum))
             {
                 newColor = false;
             }
@@ -195,4 +129,203 @@ COLOR GameHandler::getRandomColor()
     // Generate a random number between 0 and 3
 
     return colors[randomNum];
+}
+
+bool GameHandler::has(int x, int y, SIZE s, COLOR c) const
+{
+    Case cell = board->getCase(x, y);
+    Pion *p = cell.getPion(s);
+
+    if (p == NULL)
+    {
+        return false;
+    }
+    if (p->Color != c)
+    {
+        return false;
+    }
+    return true;
+}
+
+bool GameHandler::checkStack(int x, int y, COLOR c) const
+{
+
+    if (!has(x, y, SMALL, c))
+    {
+        return false;
+    }
+    if (!has(x, y, MEDIUM, c))
+    {
+        return false;
+    }
+    if (!has(x, y, LARGE, c))
+    {
+        return false;
+    }
+    return true;
+}
+
+bool GameHandler::checkRow(int x, COLOR c) const
+{
+    // Condition 1 : 3 identiques (même taille)
+    if (has(x, 0, SMALL, c) && has(x, 1, SMALL, c) && has(x, 2, SMALL, c))
+    {
+        return true;
+    }
+    if (has(x, 0, MEDIUM, c) && has(x, 1, MEDIUM, c) && has(x, 2, MEDIUM, c))
+    {
+        return true;
+    }
+    if (has(x, 0, LARGE, c) && has(x, 1, LARGE, c) && has(x, 2, LARGE, c))
+    {
+        return true;
+    }
+
+    // Condition 2 : croissant
+    if (has(x, 0, SMALL, c) && has(x, 1, MEDIUM, c) && has(x, 2, LARGE, c))
+    {
+        return true;
+    }
+
+    // Condition 2 : décroissant
+    if (has(x, 0, LARGE, c) && has(x, 1, MEDIUM, c) && has(x, 2, SMALL, c))
+    {
+        return true;
+    }
+
+    return false;
+}
+
+bool GameHandler::checkCol(int y, COLOR c) const
+{
+    // Condition 1 : 3 identiques
+    if (has(0, y, SMALL, c) && has(1, y, SMALL, c) && has(2, y, SMALL, c))
+    {
+        return true;
+    }
+    if (has(0, y, MEDIUM, c) && has(1, y, MEDIUM, c) && has(2, y, MEDIUM, c))
+    {
+        return true;
+    }
+    if (has(0, y, LARGE, c) && has(1, y, LARGE, c) && has(2, y, LARGE, c))
+    {
+        return true;
+    }
+
+    // Condition 2 : croissant
+    if (has(0, y, SMALL, c) && has(1, y, MEDIUM, c) && has(2, y, LARGE, c))
+    {
+        return true;
+    }
+
+    // Condition 2 : décroissant
+    if (has(0, y, LARGE, c) && has(1, y, MEDIUM, c) && has(2, y, SMALL, c))
+    {
+        return true;
+    }
+
+    return false;
+}
+
+bool GameHandler::checkDiagMain(COLOR c) const
+{
+    // (0,0) (1,1) (2,2)
+
+    // Condition 1 : 3 identiques
+    if (has(0, 0, SMALL, c) && has(1, 1, SMALL, c) && has(2, 2, SMALL, c))
+    {
+        return true;
+    }
+    if (has(0, 0, MEDIUM, c) && has(1, 1, MEDIUM, c) && has(2, 2, MEDIUM, c))
+    {
+        return true;
+    }
+    if (has(0, 0, LARGE, c) && has(1, 1, LARGE, c) && has(2, 2, LARGE, c))
+    {
+        return true;
+    }
+
+    // Condition 2 : croissant
+    if (has(0, 0, SMALL, c) && has(1, 1, MEDIUM, c) && has(2, 2, LARGE, c))
+    {
+        return true;
+    }
+
+    // Condition 2 : décroissant
+    if (has(0, 0, LARGE, c) && has(1, 1, MEDIUM, c) && has(2, 2, SMALL, c))
+    {
+        return true;
+    }
+
+    return false;
+}
+
+bool GameHandler::checkDiagAnti(COLOR c) const
+{
+    // (0,2) (1,1) (2,0)
+
+    // Condition 1 : 3 identiques
+    if (has(0, 2, SMALL, c) && has(1, 1, SMALL, c) && has(2, 0, SMALL, c))
+    {
+        return true;
+    }
+    if (has(0, 2, MEDIUM, c) && has(1, 1, MEDIUM, c) && has(2, 0, MEDIUM, c))
+    {
+        return true;
+    }
+    if (has(0, 2, LARGE, c) && has(1, 1, LARGE, c) && has(2, 0, LARGE, c))
+    {
+        return true;
+    }
+    // Condition 2 : croissant
+    if (has(0, 2, SMALL, c) && has(1, 1, MEDIUM, c) && has(2, 0, LARGE, c))
+    {
+        return true;
+    }
+
+    // Condition 2 : décroissant
+    if (has(0, 2, LARGE, c) && has(1, 1, MEDIUM, c) && has(2, 0, SMALL, c))
+    {
+        return true;
+    }
+
+    return false;
+}
+
+bool GameHandler::detectWin(int x, int y, COLOR c) const
+{
+    // Empilement (condition 3)
+    if (checkStack(x, y, c))
+    {
+        return true;
+    }
+
+    // Ligne + colonne
+    if (checkRow(x, c))
+    {
+        return true;
+    }
+    if (checkCol(y, c))
+    {
+        return true;
+    }
+
+    // Diagonales seulement si on est dessus
+    if (x == y)
+    {
+        if (checkDiagMain(c))
+        {
+            return true;
+        }
+    }
+
+    if (x + y == 2)
+    {
+        if (checkDiagAnti(c))
+        {
+            return true;
+        }
+    }
+
+    return false;
 }
