@@ -6,6 +6,7 @@
 
 #include "Case.hpp"
 #include "Board.hpp"
+#include "Human.hpp"
 
 #define MAX_PLAYER 4
 #define MIN_PLAYER 1
@@ -16,18 +17,20 @@ class GameHandler
 private:
     int currentPlayer;
 
-    // std::vector<Player*> players;
+    std::vector<Player*> players;
     Board *board;
 
     /**
      * @brief Vérifie si un joueur a gagné
-     * 
-     * @param box 
-     * @return true 
-     * @return false 
+     *
+     * @param box
+     * @return true
+     * @return false
      */
     bool detectWin(Case *box);
     void refreshDisplay(void);
+
+    COLOR getRandomColor();
 
     /**
      * @brief Configure le jeu

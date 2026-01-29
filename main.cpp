@@ -9,7 +9,7 @@
  */
 #include <iostream>
 #include "GameHandler.hpp"
-
+#include "tests.hpp"
 
 int main(int argc, char const *argv[])
 {
@@ -17,11 +17,12 @@ int main(int argc, char const *argv[])
     std::cout << "CPP TP6 - Euge Anna Jack Nath Toma " << "\n";
     std::cout << "==============================" << "\n";
     std::cout << std::endl;
+    testDisplayInput();
 
     /* TODO */
-    GameHandler game = GameHandler();
-
-    game.start();
+    // GameHandler game = GameHandler();
+    //
+    // game.start();
 
     return 0;
 }

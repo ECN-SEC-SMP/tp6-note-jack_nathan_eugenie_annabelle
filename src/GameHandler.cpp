@@ -2,7 +2,7 @@
 
 GameHandler::GameHandler(void)
 {
-    // this->players = [];
+    this->players = {};
     this->board = new Board();
     this->currentPlayer = 0;
 }
@@ -56,12 +56,24 @@ void GameHandler::setup()
         }
     }
 
+    int totalJoueurs = nbJoueurs + nbRobots;
     for (int i = 0; i < nbJoueurs; i++)
     {
-        // this.players.push(Humain());
+
+        std::vector<COLOR> colors = {};
+        if (totalJoueurs == 2)
+        {
+            colors.push_back(COLOR::BLUE);
+        }
+        colors.push_back(COLOR::GREEN);
+        const std::string name = std::to_string(i);
+        this->players.push_back(new Human(name, colors));
     }
+
     for (int i = 0; i < nbRobots; i++)
     {
+        // this->players.push_back(new Robot(name, colors));
+
         // this.players.push(Robot());
     }
 
@@ -145,4 +157,42 @@ bool GameHandler::checkCase(int x, int y)
 {
     // Comparer la case
     return true;
+}
+
+COLOR GameHandler::getRandomColor()
+{
+    std::vector<COLOR> colors = {COLOR::BLUE, COLOR::GREEN, COLOR::RED, COLOR::YELLOW};
+
+    std::vector<COLOR> takenColor = {};
+
+    for (Player *p : this->players)
+    {
+        const std::vector<COLOR> &pColor = p->getColor();
+        for (size_t i = 0; i < pColor.size(); i++)
+        {
+            takenColor.push_back(pColor.at(0));
+        }
+    }
+
+    srand(time(0));
+    bool newColor;
+    int randomNum;
+    do
+    {
+        newColor = true;
+        randomNum = rand() % 4;
+
+        for (COLOR c : takenColor)
+        {
+            if (c == colors.at(randomNum))
+            {
+                newColor = false;
+            }
+        }
+
+    } while (!newColor);
+
+    // Generate a random number between 0 and 3
+
+    return colors[randomNum];
 }
