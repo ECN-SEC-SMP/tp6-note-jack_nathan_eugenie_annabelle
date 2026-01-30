@@ -18,3 +18,10 @@ Case Board::getCase(int x, int y)
 {
     return cases[x][y];
 }
+
+// utilisé dans Bot.cpp
+void Board::addPion(int x, int y, const Pion& p)
+{
+    if (x < 0 || x >= BOARD_SIZE || y < 0 || y >= BOARD_SIZE) return;
+    cases[x][y].addPion(new Pion(p));
+}

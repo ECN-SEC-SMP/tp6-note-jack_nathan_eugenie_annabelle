@@ -6,6 +6,7 @@
  * @copyright Copyright (c) 2026
  */
 #include "Case.hpp"
+#include "Pion.hpp"
 
 #define BOARD_SIZE 3 ///< Taille du plateau (3x3)
 
@@ -36,4 +37,12 @@ public:
      * @return Case La case aux coordonnées spécifiées
      */
     Case getCase(int x, int y);
+
+    /**
+     * @brief Place un pion sur la case aux coordonnées (x, y) (délègue à Case::addPion).
+     * @param x Coordonnée X (0-2)
+     * @param y Coordonnée Y (0-2)
+     * @param p Pion à placer
+     */
+    void placePionOnCase(int x, int y, const Pion& p);
 };

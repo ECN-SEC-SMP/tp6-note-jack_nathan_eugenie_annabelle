@@ -2,7 +2,7 @@
 #define BOT_HPP
 
 #include "Player.hpp"
-#include "board.h"
+#include "Board.hpp"
 #include "Size.hpp"
 #include <vector>
 
@@ -45,6 +45,26 @@ public:
 
     // Renvoie la liste des coups possibles.
     std::vector<Move> getPossibleMoves(Board* board) const;
+
+    /**
+     * @brief Vérifie si placer le pion (c, s) en (x, y) ferait gagner ce joueur.
+     */
+    bool wouldWin(Board* board, int x, int y, COLOR c, SIZE s) const;
+
+    /**
+     * @brief Place un pion sur le plateau en (x, y).
+     */
+    void addPion(Board* board, int x, int y, const Pion& p) const;
+
+    /**
+     * @brief Retourne les couleurs des autres joueurs.
+     */
+    std::vector<COLOR> getOpponentColors(Board* board, COLOR myColor) const;
+
+    /**
+     * @brief Vérifie si l'adversaire gagnerait en jouant (x, y) avec la taille s.
+     */
+    bool wouldOpponentWin(Board* board, int x, int y, COLOR opponentColor, SIZE s) const;
 };
 
 #endif
