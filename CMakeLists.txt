@@ -11,9 +11,10 @@ set(sources
     ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Display.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Input.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Bot.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Player.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tests/testDisplay.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tests/testInput.cpp
-    # ${CMAKE_CURRENT_SOURCE_DIR}/src/_.cpp
 )
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
