@@ -106,33 +106,33 @@
 
 #define PION_SEL_HARDCODE_NB_LINES 7
 const std::string PION_SEL_HARDCODE_SMALL[PION_SEL_HARDCODE_NB_LINES] = {
-"╔══      ══╗──      ──┬──      ──┐",
-"║          ║          │██████████│",
-"              ██████   ██      ██ ",
-"     ██       ██  ██   ██      ██ ",
-"              ██████   ██      ██ ",
-"║          ║          │██████████│",
-"╚══      ══╝──      ──┴──      ──┘",
+    "╔══ %d/3  ══╗── %d/3  ──┬── %d/3  ──┐",
+    "║          ║          │██████████│",
+    "              ██████   ██      ██ ",
+    "     ██       ██  ██   ██      ██ ",
+    "              ██████   ██      ██ ",
+    "║          ║          │██████████│",
+    "╚══      ══╝──      ──┴──      ──┘",
 };
 
 const std::string PION_SEL_HARDCODE_MEDIUM[PION_SEL_HARDCODE_NB_LINES] = {
-"┌──      ──╔══      ══╗──      ──┐",
-"│          ║          ║██████████│",
-"              ██████   ██      ██ ",
-"     ██       ██  ██   ██      ██ ",
-"              ██████   ██      ██ ",
-"│          ║          ║██████████│",
-"└──      ──╚══      ══╝──      ──┘",
+    "┌── %d/3  ──╔══ %d/3  ══╗── %d/3  ──┐",
+    "│          ║          ║██████████│",
+    "              ██████   ██      ██ ",
+    "     ██       ██  ██   ██      ██ ",
+    "              ██████   ██      ██ ",
+    "│          ║          ║██████████│",
+    "└──      ──╚══      ══╝──      ──┘",
 };
 
 const std::string PION_SEL_HARDCODE_LARGE[PION_SEL_HARDCODE_NB_LINES] = {
-"┌──      ──┬──      ──╔══      ══╗",
-"│          │          ║██████████║",
-"              ██████   ██      ██ ",
-"     ██       ██  ██   ██      ██ ",
-"              ██████   ██      ██ ",
-"│          │          ║██████████║",
-"└──      ──┴──      ──╚══      ══╝",
+    "┌── %d/3  ──┬── %d/3  ──╔══ %d/3  ══╗",
+    "│          │          ║██████████║",
+    "              ██████   ██      ██ ",
+    "     ██       ██  ██   ██      ██ ",
+    "              ██████   ██      ██ ",
+    "│          │          ║██████████║",
+    "└──      ──┴──      ──╚══      ══╝",
 };
 
 /* Private methods --------------------------------------------------------- */
@@ -367,7 +367,12 @@ void Display::print(/* Board brd */)
         pionSelBuff = PION_SEL_HARDCODE_SMALL;
     }
 
-    for (uint8_t i = 0; i < PION_SEL_HARDCODE_NB_LINES; i++)
+    // First print with numbers
+    char tempBuff[50];
+    snprintf(tempBuff, 50, pionSelBuff[0].c_str(), this->smallNb, this->mediumNb, this->largeNb);
+    std::cout << tempBuff << "\n";
+
+    for (uint8_t i = 1; i < PION_SEL_HARDCODE_NB_LINES; i++)
     {
         std::cout << pionSelBuff[i] << "\n";
     }
@@ -375,10 +380,12 @@ void Display::print(/* Board brd */)
     return;
 }
 
-void Display::printPionSelection(bool enable)
+void Display::printPionSelection(bool enable, uint8_t smallNb, uint8_t mediumNb, uint8_t largeNb)
 {
-
     this->pionSelEn = enable;
+    this->smallNb = smallNb;
+    this->mediumNb = mediumNb;
+    this->largeNb = largeNb;
 
     return;
 }

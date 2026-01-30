@@ -42,7 +42,7 @@ void testDisplay(void) {
 
     disp->setCursor(2, 2);
     disp->setCursor(MEDIUM);
-    disp->printPionSelection(true);
+    // disp->printPionSelection(true);
     disp->print();
 
     while (running);
@@ -72,7 +72,7 @@ void testDisplayAsk(void) {
 
     char tmp[2];
     std::cin >> tmp;
-    
+
     delete disp;
 
     return;
@@ -90,7 +90,7 @@ void testDisplayInput(void) {
 
     disp->setCursor(DISPLAY_SELECT_NONE, DISPLAY_SELECT_NONE);
     disp->setCursor(SMALL);
-    disp->printPionSelection(true);
+    // disp->printPionSelection(true);
 
     bool modePionSel = true;
     InputKey_t key = KEY_NONE;
@@ -117,7 +117,7 @@ void testDisplayInput(void) {
 
         if (!modePionSel) {
             // ===== Case selection
-            disp->printPionSelection(false);
+            disp->printPionSelection(false, 0, 0, 0);
 
             if (key == ARROW_UP) {
                 if (x > 0) {
@@ -144,7 +144,7 @@ void testDisplayInput(void) {
             disp->print();
         } else {
             // ===== Pion selection
-            disp->printPionSelection(true);
+            disp->printPionSelection(true, 1, 2, 3);
 
             if (key == ARROW_RIGHT) {
                 if (sizeSel < LARGE) {

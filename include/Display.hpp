@@ -44,6 +44,10 @@ private:
     bool pionSelEn;
     enum SIZE selPion;
 
+    uint8_t smallNb;
+    uint8_t mediumNb;
+    uint8_t largeNb;
+
     /**
      * @brief Affiche la grille
      * 
@@ -107,7 +111,7 @@ public:
      * 
      * @param enable true affiche, false efface
      */
-    void printPionSelection(bool enable);
+    void printPionSelection(bool enable, uint8_t smallNb, uint8_t mediumNb, uint8_t largeNb);
 
     /**
      * @brief Met le curseur à la position x,y sur la grille
@@ -126,12 +130,6 @@ public:
      * @param size SMALL, MEDIUM, LARGE
      */
     void setCursor(enum SIZE size);
-
-    /**
-     * @brief Pose un pion sur l'affichage 
-     * 
-     */
-    void addPion(Pion pion, uint8_t x, uint8_t y);
 
     /**
      * @brief Demande le nombre de joueur voulu
