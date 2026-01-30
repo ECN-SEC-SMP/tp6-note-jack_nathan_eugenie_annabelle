@@ -52,6 +52,32 @@ void testDisplay(void) {
     return;
 }
 
+void testDisplayAsk(void) {
+    uint8_t val;
+    
+    signal(SIGABRT, &sighandler);
+	signal(SIGTERM, &sighandler);
+	signal(SIGINT, &sighandler);
+
+    disp = new Display();
+
+    val = disp->getNbPlayers(1, 4);
+    std::cout << "Nb Player is : " << val << "\n";
+    
+    val = disp->getNbRobot(0, 3);
+    std::cout << "Nb Robot is : " << val << "\n";
+
+    std::string ans = disp->getString("Did you had a greet day ?");
+    std::cout << "Answer : " << ans << "\n";
+
+    char tmp[2];
+    std::cin >> tmp;
+    
+    delete disp;
+
+    return;
+}
+
 void testDisplayInput(void) {
     signal(SIGABRT, &sighandler);
 	signal(SIGTERM, &sighandler);

@@ -138,14 +138,14 @@ public:
      * 
      * @return uint8_t Retourne le nombre de joueur 2 à 4
      */
-    uint8_t getNbPlayers(void);
+    uint8_t getNbPlayers(uint8_t min, uint8_t max);
 
     /**
      * @brief Demande le nombre de robot voulu
      * 
      * @return uint8_t 
      */
-    uint8_t getNbRobot(void);
+    uint8_t getNbRobot(uint8_t min, uint8_t max);
 
     /**
      * @brief Demande une suite de caractère

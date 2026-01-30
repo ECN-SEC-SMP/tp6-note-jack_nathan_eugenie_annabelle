@@ -11,6 +11,7 @@
 #define TESTS_HPP_
 
 void testDisplay(void);
+void testDisplayAsk(void);
 void testInput(void);
 void testDisplayInput(void);
 
