@@ -6,13 +6,13 @@
  *
  * @copyright (c) 2026
  *
- * Nécessite board.h avec l'interface Board (isEmpty, canPlacePion, addPion,
- * wouldWin, wouldOpponentWin, getOpponentColors).
+ * Utilise la classe Board réelle (Board.hpp) : getCase, addPion, NB_ROW, NB_COL.
  */
 
 #include "tests.hpp"
 #include "Bot.hpp"
-#include "board.h"
+#include "Board.hpp"
+#include "Case.hpp"
 #include "Color.hpp"
 #include "Size.hpp"
 #include "Pion.hpp"
@@ -21,81 +21,15 @@
 #include <iostream>
 #include <vector>
 
-/* --------------------------------------------------------------------------- */
-/* MockBoard : plateau factice pour tester le Bot sans dépendre du vrai Board  */
-/* --------------------------------------------------------------------------- */
-
 /**
  * Grille 3x3 : chaque case peut contenir un pion (ou être vide).
  * Implémentation minimale pour les tests (pas de règle de victoire réelle).
  */
-class MockBoard : public Board
+static bool caseHasPion(Board& board, int x, int y)
 {
-public:
-    MockBoard()
-    {
-        for (int i = 0; i < NB_ROW; ++i)
-            for (int j = 0; j < NB_COL; ++j)
-                grid[i][j] = nullptr;
-    }
-
-    ~MockBoard() override
-    {
-        for (int i = 0; i < NB_ROW; ++i)
-            for (int j = 0; j < NB_COL; ++j)
-                delete grid[i][j];
-    }
-
-    bool isEmpty(int x, int y) const override
-    {
-        if (x < 0 || x >= NB_ROW || y < 0 || y >= NB_COL) return true;
-        return grid[x][y] == nullptr;
-    }
-
-    bool canPlacePion(int x, int y, SIZE s) const override
-    {
-        if (x < 0 || x >= NB_ROW || y < 0 || y >= NB_COL) return false;
-        return grid[x][y] == nullptr;
-    }
-
-    void addPion(int x, int y, const Pion& p) override
-    {
-        if (x < 0 || x >= NB_ROW || y < 0 || y >= NB_COL) return;
-        delete grid[x][y];
-        grid[x][y] = new Pion(p);
-    }
-
-    bool wouldWin(int x, int y, COLOR c, SIZE s) const override
-    {
-        (void)x;
-        (void)y;
-        (void)c;
-        (void)s;
-        return false; /* pour les tests on peut forcer true sur une case précise */
-    }
-
-    bool wouldOpponentWin(int x, int y, COLOR opponentColor, SIZE s) const override
-    {
-        (void)x;
-        (void)y;
-        (void)opponentColor;
-        (void)s;
-        return false;
-    }
-
-    std::vector<COLOR> getOpponentColors(COLOR myColor) const override
-    {
-        std::vector<COLOR> out;
-        if (myColor != RED)   out.push_back(RED);
-        if (myColor != BLUE)  out.push_back(BLUE);
-        if (myColor != GREEN) out.push_back(GREEN);
-        if (myColor != YELLOW) out.push_back(YELLOW);
-        return out;
-    }
-
-private:
-    Pion* grid[NB_ROW][NB_COL];
-};
+    Case c = board.getCase(x, y);
+    return c.getPion(SMALL) != nullptr || c.getPion(MEDIUM) != nullptr || c.getPion(LARGE) != nullptr;
+}
 
 /* --------------------------------------------------------------------------- */
 /* Tests                                                                        */
@@ -129,7 +63,7 @@ static void testBotGetPossibleMoves(void)
     std::cout << "[testBot] getPossibleMoves..." << std::endl;
 
     Bot bot("BotTest", RED);
-    MockBoard board;
+    Board board;
 
     std::vector<Move> moves = bot.getPossibleMoves(&board);
     /* Plateau vide 3x3, 3 tailles -> au plus 3*3*3 = 27 coups possibles (et le bot a des pions). */
@@ -151,31 +85,29 @@ static void testBotPlayTurn(void)
     std::cout << "[testBot] playTurn..." << std::endl;
 
     Bot bot("BotTest", BLUE);
-    MockBoard board;
+    Board board;
     cursor_t cursor = {-1, -1};
 
     playerAction_t action = bot.playTurn(&board, &cursor);
     assert(action == ENDPLAY);
     assert(cursor.x >= 0 && cursor.x < Board::NB_ROW);
     assert(cursor.y >= 0 && cursor.y < Board::NB_COL);
-    assert(!board.isEmpty(cursor.x, cursor.y));
+    assert(caseHasPion(board, cursor.x, cursor.y));
 
     std::cout << "[testBot] playTurn OK (joué en " << cursor.x << "," << cursor.y << ")." << std::endl;
 }
 
 /**
- * @brief Test de nextMove : previsionsCoups est rempli (via un second appel ou en vérifiant le comportement).
- * On vérifie que nextMove ne plante pas et qu’après un getPossibleMoves on a des coups cohérents.
+ * @brief Test de nextMove : on vérifie que nextMove ne plante pas et qu’après getPossibleMoves on a des coups cohérents.
  */
 static void testBotNextMove(void)
 {
     std::cout << "[testBot] nextMove..." << std::endl;
 
     Bot bot("BotTest", GREEN);
-    MockBoard board;
+    Board board;
 
     bot.nextMove(&board);
-    /* On ne peut pas accéder à previsionsCoups (privé), donc on vérifie juste que nextMove s’exécute. */
     std::vector<Move> moves = bot.getPossibleMoves(&board);
     assert(!moves.empty());
 

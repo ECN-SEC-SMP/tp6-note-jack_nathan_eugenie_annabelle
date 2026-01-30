@@ -5,6 +5,9 @@
  * @date 2026-01-27
  * @copyright Copyright (c) 2026
  */
+#ifndef BOARD_HPP
+#define BOARD_HPP
+
 #include "Case.hpp"
 #include "Pion.hpp"
 
@@ -19,6 +22,8 @@ class Board
 private:
     Case cases[BOARD_SIZE][BOARD_SIZE]; ///< Matrice des cases du plateau
 public:
+    static const int NB_ROW = 3;
+    static const int NB_COL = 3;
     /**
      * @brief Constructeur du plateau
      * Initialise toutes les cases du plateau
@@ -39,10 +44,12 @@ public:
     Case getCase(int x, int y);
 
     /**
-     * @brief Place un pion sur la case aux coordonnées (x, y) (délègue à Case::addPion).
+     * @brief Place un pion sur la case aux coordonnées (x, y) (utilisé dans Bot.cpp)
      * @param x Coordonnée X (0-2)
      * @param y Coordonnée Y (0-2)
      * @param p Pion à placer
      */
-    void placePionOnCase(int x, int y, const Pion& p);
+    void addPion(int x, int y, const Pion& p);
 };
+
+#endif /* BOARD_HPP */

@@ -1,5 +1,4 @@
 #include "Bot.hpp"
-#include "Board.hpp"
 #include "Pion.hpp"
 #include <algorithm>
 #include <random>

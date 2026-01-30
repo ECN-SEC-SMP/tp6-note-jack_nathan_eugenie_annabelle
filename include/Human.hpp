@@ -46,7 +46,7 @@ public:
         // 3. Si le joueur valide un placement :
 
         if (hasPion(c, s) && ???(cursor->x, cursor->y, s)) {
-            board->placePionOnCase(cursor->x, cursor->y, {c, s});
+            board->addPion(cursor->x, cursor->y, {c, s});
             usePion(c, s);
             return ENDPLAY; // Fin du tour
         }

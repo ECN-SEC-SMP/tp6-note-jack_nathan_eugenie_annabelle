@@ -7,6 +7,8 @@
 #include <Size.hpp>
 #include <Color.hpp>
 
+class Board;
+
 typedef enum{
     ENDPLAY,
     ARROW,
