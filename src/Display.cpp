@@ -10,6 +10,8 @@
  */
 #include "Display.hpp"
 
+#include <exception>
+#include <format>
 #include <iostream>
 
 // Lines
@@ -104,33 +106,33 @@
 
 #define PION_SEL_HARDCODE_NB_LINES 7
 const std::string PION_SEL_HARDCODE_SMALL[PION_SEL_HARDCODE_NB_LINES] = {
-"╔══      ══╗──      ──┬──      ──┐",
-"║          ║          │██████████│",
-"              ██████   ██      ██ ",
-"     ██       ██  ██   ██      ██ ",
-"              ██████   ██      ██ ",
-"║          ║          │██████████│",
-"╚══      ══╝──      ──┴──      ──┘",
+    "╔══ %d/3  ══╗── %d/3  ──┬── %d/3  ──┐",
+    "║          ║          │██████████│",
+    "              ██████   ██      ██ ",
+    "     ██       ██  ██   ██      ██ ",
+    "              ██████   ██      ██ ",
+    "║          ║          │██████████│",
+    "╚══      ══╝──      ──┴──      ──┘",
 };
 
 const std::string PION_SEL_HARDCODE_MEDIUM[PION_SEL_HARDCODE_NB_LINES] = {
-"┌──      ──╔══      ══╗──      ──┐",
-"│          ║          ║██████████│",
-"              ██████   ██      ██ ",
-"     ██       ██  ██   ██      ██ ",
-"              ██████   ██      ██ ",
-"│          ║          ║██████████│",
-"└──      ──╚══      ══╝──      ──┘",
+    "┌── %d/3  ──╔══ %d/3  ══╗── %d/3  ──┐",
+    "│          ║          ║██████████│",
+    "              ██████   ██      ██ ",
+    "     ██       ██  ██   ██      ██ ",
+    "              ██████   ██      ██ ",
+    "│          ║          ║██████████│",
+    "└──      ──╚══      ══╝──      ──┘",
 };
 
 const std::string PION_SEL_HARDCODE_LARGE[PION_SEL_HARDCODE_NB_LINES] = {
-"┌──      ──┬──      ──╔══      ══╗",
-"│          │          ║██████████║",
-"              ██████   ██      ██ ",
-"     ██       ██  ██   ██      ██ ",
-"              ██████   ██      ██ ",
-"│          │          ║██████████║",
-"└──      ──┴──      ──╚══      ══╝",
+    "┌── %d/3  ──┬── %d/3  ──╔══ %d/3  ══╗",
+    "│          │          ║██████████║",
+    "              ██████   ██      ██ ",
+    "     ██       ██  ██   ██      ██ ",
+    "              ██████   ██      ██ ",
+    "│          │          ║██████████║",
+    "└──      ──┴──      ──╚══      ══╝",
 };
 
 /* Private methods --------------------------------------------------------- */
@@ -365,7 +367,12 @@ void Display::print(/* Board brd */)
         pionSelBuff = PION_SEL_HARDCODE_SMALL;
     }
 
-    for (uint8_t i = 0; i < PION_SEL_HARDCODE_NB_LINES; i++)
+    // First print with numbers
+    char tempBuff[50];
+    snprintf(tempBuff, 50, pionSelBuff[0].c_str(), this->smallNb, this->mediumNb, this->largeNb);
+    std::cout << tempBuff << "\n";
+
+    for (uint8_t i = 1; i < PION_SEL_HARDCODE_NB_LINES; i++)
     {
         std::cout << pionSelBuff[i] << "\n";
     }
@@ -373,10 +380,12 @@ void Display::print(/* Board brd */)
     return;
 }
 
-void Display::printPionSelection(bool enable)
+void Display::printPionSelection(bool enable, uint8_t smallNb, uint8_t mediumNb, uint8_t largeNb)
 {
-
     this->pionSelEn = enable;
+    this->smallNb = smallNb;
+    this->mediumNb = mediumNb;
+    this->largeNb = largeNb;
 
     return;
 }
@@ -401,31 +410,54 @@ void Display::setCursor(enum SIZE size)
     return;
 }
 
-void Display::addPion(Pion pion, uint8_t x, uint8_t y)
-{
-    this->board[x][y][pion.taille].taille = pion.taille;
-    this->board[x][y][pion.taille].Color = pion.Color;
 
-    return;
+uint8_t Display::getNbPlayers(uint8_t min, uint8_t max)
+{
+    uint8_t nbJoueur = 0;
+
+    if ((min > 9) || (max > 9)) {
+        throw std::invalid_argument("Min and max must be a digit");
+    }
+
+    do
+    {
+        std::cout << "\nCombien de joueurs ? (" << unsigned(min) << " à " << unsigned(max) << ") : ";
+        std::cin >> nbJoueur;
+        std::cin.ignore();
+    }
+    while((nbJoueur < ('0' + min)) || nbJoueur > ('0' + max));
+    
+
+    return nbJoueur;
 }
 
-uint8_t Display::getNbPlayers(void)
+
+uint8_t Display::getNbRobot(uint8_t min, uint8_t max)
 {
-    // TODO : Ask how many players
+    uint8_t nbJoueur = 0;
 
-    return NULL;
-}
+    if ((min > 9) || (max > 9)) {
+        throw std::invalid_argument("Min and max must be a digit");
+    }
 
-uint8_t Display::getNbRobot(void)
-{
-    // TODO : Ask how many robots
+    do
+    {
+        std::cout << "\nCombien de robot ? (" << unsigned(min) << " à " << unsigned(max) << ") : ";
+        std::cin >> nbJoueur;
+        std::cin.ignore();
+    }
+    while((nbJoueur < ('0' + min)) || nbJoueur > ('0' + max));
+    
 
-    return NULL;
+    return nbJoueur;
 }
 
 std::string Display::getString(std::string question)
 {
-    // TODO : Ask question
+    std::string answer = "";
 
-    return NULL;
+    std::cout << question;
+    std::cin >> answer;
+
+    return answer;
 }

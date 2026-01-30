@@ -10,7 +10,10 @@
 #ifndef TESTS_HPP_
 #define TESTS_HPP_
 
+void testBoard(void);
+void testCase(void);
 void testDisplay(void);
+void testDisplayAsk(void);
 void testInput(void);
 void testDisplayInput(void);
 

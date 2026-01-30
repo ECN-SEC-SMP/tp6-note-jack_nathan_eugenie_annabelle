@@ -42,11 +42,37 @@ void testDisplay(void) {
 
     disp->setCursor(2, 2);
     disp->setCursor(MEDIUM);
-    disp->printPionSelection(true);
+    // disp->printPionSelection(true);
     disp->print();
 
     while (running);
     
+    delete disp;
+
+    return;
+}
+
+void testDisplayAsk(void) {
+    uint8_t val;
+    
+    signal(SIGABRT, &sighandler);
+	signal(SIGTERM, &sighandler);
+	signal(SIGINT, &sighandler);
+
+    disp = new Display();
+
+    val = disp->getNbPlayers(1, 4);
+    std::cout << "Nb Player is : " << val << "\n";
+    
+    val = disp->getNbRobot(0, 3);
+    std::cout << "Nb Robot is : " << val << "\n";
+
+    std::string ans = disp->getString("Did you had a greet day ?");
+    std::cout << "Answer : " << ans << "\n";
+
+    char tmp[2];
+    std::cin >> tmp;
+
     delete disp;
 
     return;
@@ -64,7 +90,7 @@ void testDisplayInput(void) {
 
     disp->setCursor(DISPLAY_SELECT_NONE, DISPLAY_SELECT_NONE);
     disp->setCursor(SMALL);
-    disp->printPionSelection(true);
+    // disp->printPionSelection(true);
 
     bool modePionSel = true;
     InputKey_t key = KEY_NONE;
@@ -91,7 +117,7 @@ void testDisplayInput(void) {
 
         if (!modePionSel) {
             // ===== Case selection
-            disp->printPionSelection(false);
+            disp->printPionSelection(false, 0, 0, 0);
 
             if (key == ARROW_UP) {
                 if (x > 0) {
@@ -118,7 +144,7 @@ void testDisplayInput(void) {
             disp->print();
         } else {
             // ===== Pion selection
-            disp->printPionSelection(true);
+            disp->printPionSelection(true, 1, 2, 3);
 
             if (key == ARROW_RIGHT) {
                 if (sizeSel < LARGE) {
