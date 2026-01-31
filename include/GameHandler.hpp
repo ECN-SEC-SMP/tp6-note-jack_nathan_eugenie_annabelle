@@ -21,6 +21,11 @@ private:
     std::vector<Player *> players;
     Board board;
 
+    /**
+     * @brief Récupère une couleur aléatoire qui n'est pas déjà utilisé par un autre joueur
+     * 
+     * @return COLOR 
+     */
     COLOR getRandomColor();
 
     /**
