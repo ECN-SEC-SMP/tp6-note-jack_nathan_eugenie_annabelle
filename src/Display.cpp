@@ -222,7 +222,6 @@ void Display::loadCase(void)
     // Print Medium
     this->loadCircleMedium(1, 1, ANSI_CODE_FOREGROUND_GREEN);
     
-    // Print Small
     this->loadCircleSmall(1, 1, ANSI_CODE_FOREGROUND_BLUE);
 
 }

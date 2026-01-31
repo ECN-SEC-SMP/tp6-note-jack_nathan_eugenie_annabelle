@@ -7,6 +7,7 @@
 #include "Case.hpp"
 #include "Board.hpp"
 #include "Human.hpp"
+#include "Display.hpp"
 
 #define MAX_PLAYER 4
 #define MIN_PLAYER 1
@@ -18,17 +19,7 @@ private:
     int currentPlayer;
 
     std::vector<Player *> players;
-    Board *board;
-
-    /**
-     * @brief Vérifie si un joueur a gagné
-     *
-     * @param box
-     * @return true
-     * @return false
-     */
-    bool detectWin(Case *box);
-    void refreshDisplay(void);
+    Board board;
 
     COLOR getRandomColor();
 
@@ -40,36 +31,76 @@ private:
     void setup(void);
 
     /**
-     * @brief Configure le nom des joueurs
+     * @brief Detecte la victoire
      *
+     * @param x Position X du dernier pion joué sur la board
+     * @param y Position Y du dernier pion joué sur la board
+     * @param c Couleur du dernier pion joué
+     * @return true
+     * @return false
      */
-    void joueursNoms(void);
+    bool detectWin(int x, int y, COLOR c);
 
     /**
-     * @brief Récupère un entier aléatoire entre l'intervale défini
+     * @brief Vérifie la ligne d'une board
      *
-     * @param min Valeur minimale
-     * @param max Valeur maximale
-     * @return int
+     * @param x Position X du pion joué sur la board
+     * @param c Couleur du pion joué
+     * @return true
+     * @return false
      */
-    int getRandom(int min, int max);
+    bool checkRow(int x, COLOR c);
 
     /**
-     * @brief Assigne la couleur à chacun des joueurs
+     * @brief Vérifie la colonne d'une board
      *
+     * @param x Position Y du pion joué sur la board
+     * @param c Couleur du pion joué
+     * @return true
+     * @return false
      */
-    void assignColor(void);
+    bool checkCol(int y, COLOR c);
 
-    bool detectWin(int x, int y, COLOR c) const;
+    /**
+     * @brief Vérifie la diagonale gauche-droite sur la board
+     *
+     * @param c Couleur du pion joué
+     * @return true
+     * @return false
+     */
+    bool checkDiagMain(COLOR c);
 
-    bool checkRow(int x, COLOR c) const;
-    bool checkCol(int y, COLOR c) const;
-    bool checkDiagMain(COLOR c) const;
-    bool checkDiagAnti(COLOR c) const;
-    bool checkStack(int x, int y, COLOR c) const;
+    /**
+     * @brief Vérifie la diagonale droite-gauche sur la board
+     *
+     * @param c Couleur du pion joué
+     * @return true
+     * @return false
+     */
+    bool checkDiagAnti(COLOR c);
 
-    // helper de lecture
-    bool has(int x, int y, SIZE s, COLOR c) const;
+    /**
+     * @brief Vérifie l'empilement des pions une case sur la board
+     *
+     * @param x Position X du dernier pion joué sur la board
+     * @param y Position Y du dernier pion joué sur la board
+     * @param c Couleur du pion joué
+     * @return true
+     * @return false
+     */
+    bool checkStack(int x, int y, COLOR c);
+
+    /**
+     * @brief Vérifie si une `Case` contient un pion
+     *
+     * @param x Position X du pion
+     * @param y Position Y du pion
+     * @param s Taille du pion
+     * @param c Couleur du pion
+     * @return true
+     * @return false
+     */
+    bool has(int x, int y, SIZE s, COLOR c);
 
 public:
     /**

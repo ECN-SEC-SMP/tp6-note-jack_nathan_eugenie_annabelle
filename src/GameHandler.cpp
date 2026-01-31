@@ -3,7 +3,7 @@
 GameHandler::GameHandler(void)
 {
     this->players = {};
-    this->board = new Board();
+    this->board = Board();
     this->currentPlayer = 0;
 }
 
@@ -85,9 +85,57 @@ void GameHandler::start(void)
 {
     srand(time(0));
 
+    // Setup du jeu
     this->setup();
 
+    // Choix random du joueur de début
+    this->currentPlayer = rand() % this->players.size();
 
+    Display display = Display();
+
+    // Jeu
+    bool win = false;
+    while (!win)
+    {
+        playerAction_t action = PION_SEL_ENABLE;
+        cursor_t cursor;
+
+        display.printPionSelection(true);
+        bool selPion = true;
+        while (action != ENDPLAY)
+        {
+            display.print();
+
+            action = this->players[currentPlayer]->playTurn(&this->board, &cursor);
+            if (action == PION_SEL_DISABLE)
+            {
+                selPion == false;
+                display.printPionSelection(selPion);
+            }
+            else if (action == PION_SEL_ENABLE)
+            {
+                selPion == true;
+                display.printPionSelection(selPion);
+                display.setCursor((SIZE)cursor.x);
+            }
+            else if (action == ARROW)
+            {
+                if (selPion)
+                {
+                    display.setCursor((SIZE)cursor.x);
+                }
+                else
+                {
+                    display.setCursor(cursor.x, cursor.y);
+                }
+            }
+        }
+        win = detectWin(cursor.x, cursor.y, cursor.c);
+        if (!win)
+        {
+            this->currentPlayer = (this->currentPlayer + 1) % this->players.size();
+        }
+    }
 }
 
 GameHandler::~GameHandler()
@@ -131,10 +179,10 @@ COLOR GameHandler::getRandomColor()
     return colors[randomNum];
 }
 
-bool GameHandler::has(int x, int y, SIZE s, COLOR c) const
+bool GameHandler::has(int x, int y, SIZE s, COLOR c)
 {
-    Case cell = board->getCase(x, y);
-    Pion *p = cell.getPion(s);
+    Case* cell = this->board.getCase(x, y);
+    Pion *p = cell->getPion(s);
 
     if (p == NULL)
     {
@@ -147,7 +195,7 @@ bool GameHandler::has(int x, int y, SIZE s, COLOR c) const
     return true;
 }
 
-bool GameHandler::checkStack(int x, int y, COLOR c) const
+bool GameHandler::checkStack(int x, int y, COLOR c)
 {
 
     if (!has(x, y, SMALL, c))
@@ -165,7 +213,7 @@ bool GameHandler::checkStack(int x, int y, COLOR c) const
     return true;
 }
 
-bool GameHandler::checkRow(int x, COLOR c) const
+bool GameHandler::checkRow(int x, COLOR c)
 {
     // Condition 1 : 3 identiques (même taille)
     if (has(x, 0, SMALL, c) && has(x, 1, SMALL, c) && has(x, 2, SMALL, c))
@@ -196,7 +244,7 @@ bool GameHandler::checkRow(int x, COLOR c) const
     return false;
 }
 
-bool GameHandler::checkCol(int y, COLOR c) const
+bool GameHandler::checkCol(int y, COLOR c)
 {
     // Condition 1 : 3 identiques
     if (has(0, y, SMALL, c) && has(1, y, SMALL, c) && has(2, y, SMALL, c))
@@ -227,7 +275,7 @@ bool GameHandler::checkCol(int y, COLOR c) const
     return false;
 }
 
-bool GameHandler::checkDiagMain(COLOR c) const
+bool GameHandler::checkDiagMain(COLOR c)
 {
     // (0,0) (1,1) (2,2)
 
@@ -260,7 +308,7 @@ bool GameHandler::checkDiagMain(COLOR c) const
     return false;
 }
 
-bool GameHandler::checkDiagAnti(COLOR c) const
+bool GameHandler::checkDiagAnti(COLOR c)
 {
     // (0,2) (1,1) (2,0)
 
@@ -292,7 +340,7 @@ bool GameHandler::checkDiagAnti(COLOR c) const
     return false;
 }
 
-bool GameHandler::detectWin(int x, int y, COLOR c) const
+bool GameHandler::detectWin(int x, int y, COLOR c)
 {
     // Empilement (condition 3)
     if (checkStack(x, y, c))
