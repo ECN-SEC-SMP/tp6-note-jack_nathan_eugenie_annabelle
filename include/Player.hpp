@@ -7,16 +7,20 @@
 #include <Size.hpp>
 #include <Color.hpp>
 
+#include "Board.hpp"
+
 typedef enum{
     ENDPLAY,
     ARROW,
     PION_SEL_ENABLE,
     PION_SEL_DISABLE,
-}playerAction_t;
+} playerAction_t;
 
 typedef struct {
     int x;
     int y;
+    SIZE s;
+    COLOR c;
 } cursor_t;
 
 /**
@@ -42,7 +46,7 @@ protected:
      * @brief pion encore disponibles
      *
      */
-    std::vector<Pion> stock;
+    std::vector<Pion*> stock[3];
 
 public:
     /**
@@ -53,7 +57,7 @@ public:
      *
      */
     Player(const std::string name, std::vector<COLOR> assignedColor);
-    virtual ~Player()=default;
+    ~Player();
 
     // Getters
     std::string getName() const { return name; }
@@ -66,7 +70,7 @@ public:
     /**
      * @brief Méthode virtuelle pure : implémentée diff pour un Humain (saisie clavier) ou un Bot (IA) 
      */
-    virtual playerAction_t playTurn(Board* board, cursor_t* cursor);
+    virtual playerAction_t playTurn(Board* board, cursor_t* cursor) = 0;
 };
 
 #endif

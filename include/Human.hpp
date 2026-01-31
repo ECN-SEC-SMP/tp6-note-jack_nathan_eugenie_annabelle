@@ -21,12 +21,7 @@ public:
     Human(const std::string& name, std::vector<COLOR> color) : Player(name, color) {}
 
     playerAction_t playTurn(Board* board, cursor_t* cursor);
-    
-    /**
-     * @brief retourne le nom du joueur
-     *
-     */
-    std::string getCursor() const{return ; }
+ 
 };
 
 #endif

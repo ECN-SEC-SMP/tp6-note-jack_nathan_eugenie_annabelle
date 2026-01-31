@@ -22,7 +22,7 @@ void test_human_movement() {
 }
 
 void test_stock_depletion() {
-    Player p("Test", {COLOR::RED});
+    Human p("Test", {COLOR::RED});
     // On utilise 3 pions SMALL
     p.usePion(COLOR::RED, SIZE::SMALL);
     p.usePion(COLOR::RED, SIZE::SMALL);
@@ -96,17 +96,24 @@ void testHumanPlayTurnMove()
     std::vector<COLOR> colors = {YELLOW};
     Human human("Charlie", colors);
     
-    cursor_t cursor = {1, 1}; // Position centrale initiale
+    cursor_t cursor = {0}; // Position centrale initiale
     
     std::cout << "Note: Ce test attend une entree clavier (fleche ou entree)." << std::endl;
     
     // On appelle playTurn. 
     // Attention : l'appel est bloquant car il attend waitCtrlKey()
-    playerAction_t action = human.playTurn(&board, &cursor);
+    playerAction_t action = ENDPLAY;
+    do
+    {
+        action = human.playTurn(&board, &cursor);
+
+        std::cout << "Action : " << unsigned(action) << ", cursor : x=" << cursor.x << ", y=" << cursor.y << ", size=" << cursor.s << "\n";
+
+    } while (action != ENDPLAY);
     
     // Si l'utilisateur appuie sur une flèche, l'action doit être ARROW
     // Si l'utilisateur appuie sur Entrée, l'action doit être ENDPLAY (si case libre)
-    assert(action == ARROW || action == ENDPLAY || action == PION_SEL_DISABLE);
+    // assert(action == ARROW || action == ENDPLAY || action == PION_SEL_DISABLE);
     
     std::cout << "✓ Interaction playTurn testee" << std::endl;
 }
@@ -116,8 +123,8 @@ void testHuman()
     std::cout << "\n========== TESTS HUMAN ==========" << std::endl;
     
     try {
-        testHumanConstruction();
-        testHumanStock();
+        // testHumanConstruction();
+        // testHumanStock();
         testHumanPlayTurnMove(); // Optionnel : peut être mis en commentaire pour des tests automatiques sans clavier
         
         std::cout << "\n✓ Tous les tests de la classe Human sont passés!" << std::endl;

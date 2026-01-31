@@ -12,6 +12,7 @@
 
 void testBoard(void);
 void testCase(void);
+void testHuman(void);
 void testDisplay(void);
 void testInput(void);
 void testDisplayInput(void);
