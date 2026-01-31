@@ -9,6 +9,7 @@ file(MAKE_DIRECTORY output) # Create directory for outputs
 
 set(sources
     ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/GameHandler.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Display.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Input.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Board.cpp
@@ -24,7 +25,6 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/tests)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src)
-
 
 
 add_compile_definitions(PROJECT_PATH="${CMAKE_CURRENT_SOURCE_DIR}")

@@ -63,6 +63,7 @@ public:
     
     void usePion(COLOR c, SIZE s);
 
+
     /**
      * @brief Méthode virtuelle pure : implémentée diff pour un Humain (saisie clavier) ou un Bot (IA) 
      */
