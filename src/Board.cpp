@@ -1,5 +1,7 @@
 #include "Board.hpp"
 
+#include <string>
+
 Board::Board(){
     for(int i = 0; i < 3; i++)
     {
@@ -11,7 +13,20 @@ Board::Board(){
 }
 
 Board::~Board(){
-    
+    for (int i = 0; i < BOARD_SIZE; i++)
+    {
+        for (int j = 0; j < BOARD_SIZE; j++)
+        {
+            for (int s = 0; s < 3; s++)
+            {
+                Pion* p = this->cases[i][j].getPion((SIZE)s);
+                if (p != nullptr) {
+                    free(p);
+                }
+            }
+        }
+        
+    }
 }
 
 Case Board::getCase(int x, int y)

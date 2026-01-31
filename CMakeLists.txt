@@ -1,5 +1,5 @@
 
-# cmake_minimum_required(VERSION 4.0)
+cmake_minimum_required(VERSION 4.0)
 project(CPP_TP6)
 
 set(CMAKE_CXX_STANDARD 20)
@@ -9,10 +9,13 @@ file(MAKE_DIRECTORY output) # Create directory for outputs
 
 set(sources
     ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/Display.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/Input.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Board.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Case.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Display.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Human.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Input.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Player.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/tests/testHuman.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tests/testDisplay.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tests/testInput.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tests/testBoard.cpp
