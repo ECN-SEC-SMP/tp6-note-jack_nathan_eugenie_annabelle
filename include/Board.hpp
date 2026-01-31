@@ -5,6 +5,8 @@
  * @date 2026-01-27
  * @copyright Copyright (c) 2026
  */
+#ifndef BOARD_H_
+#define BOARD_H_
 #include "Case.hpp"
 
 #define BOARD_SIZE 3 ///< Taille du plateau (3x3)
@@ -37,3 +39,5 @@ public:
      */
     Case getCase(int x, int y);
 };
+
+#endif  /* BOARD_H_ */
