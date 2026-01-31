@@ -26,9 +26,6 @@
 
 #define DISPLAY_SELECT_NONE -1
 
-// TODO : REMOVE WHEN CASE IS IMPLEMENTED
-typedef Pion Case[3];
-
 class Display
 {
 private:

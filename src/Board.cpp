@@ -29,7 +29,7 @@ Board::~Board(){
     }
 }
 
-Case Board::getCase(int x, int y)
+Case* Board::getCase(int x, int y)
 {
-    return cases[x][y];
+    return &cases[x][y];
 }

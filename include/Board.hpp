@@ -25,19 +25,19 @@ public:
      * Initialise toutes les cases du plateau
      */
     Board();
-    
+
     /**
      * @brief Destructeur du plateau
      */
     ~Board();
-    
+
     /**
      * @brief Récupère une case du plateau
      * @param x Coordonnée X de la case (0-2)
      * @param y Coordonnée Y de la case (0-2)
      * @return Case La case aux coordonnées spécifiées
      */
-    Case getCase(int x, int y);
+    Case *getCase(int x, int y);
 };
 
 #endif  /* BOARD_H_ */
